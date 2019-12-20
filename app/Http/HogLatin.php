@@ -3,8 +3,7 @@
 namespace App\Http;
 
 /**
- * Class HogLatin
- * @package App
+ * Class HogLatin.
  */
 class HogLatin
 {
@@ -25,9 +24,10 @@ class HogLatin
     }
 
     /**
-     * Translate Latin to Pig Latin
+     * Translate Latin to Pig Latin.
      *
      * @param string $text Incoming text.
+     *
      * @return string
      */
     public function translate(string $text): string
@@ -40,19 +40,20 @@ class HogLatin
             return '';
         }
 
-        $data = explode(" ", $text);
+        $data = explode(' ', $text);
 
         array_walk($data, function (&$item) {
             $item = $this->processWord($item);
         });
 
-        return implode(" ", $data);
+        return implode(' ', $data);
     }
 
     /**
-     * Check if word has start vowel
+     * Check if word has start vowel.
      *
      * @param string $word
+     *
      * @return bool
      */
     private function isVowel(string $word): bool
@@ -68,17 +69,18 @@ class HogLatin
     }
 
     /**
-     * Process word
+     * Process word.
      *
      * @param string $word
+     *
      * @return string
      */
     private function processWord(string $word): string
     {
         $symbol = '';
-        if (strpbrk($word, ".,!-")) {
-            $symbol = substr($word, strlen($word)-1);
-            $word = substr($word, 0, strlen($word)-1);
+        if (strpbrk($word, '.,!-')) {
+            $symbol = substr($word, strlen($word) - 1);
+            $word = substr($word, 0, strlen($word) - 1);
         }
         $cpy_word = $word;
 
@@ -92,21 +94,21 @@ class HogLatin
             $word = ucfirst($word);
         }
 
-        return $word . $symbol;
+        return $word.$symbol;
     }
 
     /**
-     * Process consonants
+     * Process consonants.
      *
      * @param string $word
-     * @return string
      *
+     * @return string
      */
     protected function processConsonants(string $word): string
     {
         $_word = '';
         for ($i = 0; $i < strlen($word); $i++) {
-            if (!$this->isVowel($word[$i])){
+            if (!$this->isVowel($word[$i])) {
                 $_word .= $word[$i];
             } else {
                 break;
@@ -114,14 +116,16 @@ class HogLatin
         }
 
         $move = strspn($word, $_word);
-        return strtolower(substr($word, $move) . $_word . $this->dialect);
+
+        return strtolower(substr($word, $move).$_word.$this->dialect);
     }
 
     /**
-     * Check if word starts with lower case
+     * Check if word starts with lower case.
      *
      * @param string $word
-     * @return boolean
+     *
+     * @return bool
      */
     protected function startsWithUpper(string $word): bool
     {
@@ -129,7 +133,7 @@ class HogLatin
         if ($word === $check) {
             return false;
         }
+
         return true;
     }
 }
-
